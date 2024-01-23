@@ -33,6 +33,10 @@ func (rw *ReadWriteMutex) WriteLock() {
 	rw.globalLock.Lock()
 }
 
+func (rw *ReadWriteMutex) TryLock() bool {
+	return rw.globalLock.TryLock()
+}
+
 func (rw *ReadWriteMutex) WriteUnlock() {
 	rw.globalLock.Unlock()
 }
