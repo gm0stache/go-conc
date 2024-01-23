@@ -20,6 +20,17 @@ func (rw *ReadWriteMutex) ReadLock() {
 	}
 }
 
+func (rw *ReadWriteMutex) TryReadLock() bool {
+	gotLock := rw.readersLock.TryLock()
+	if gotLock {
+		rw.readersCounter++
+		if rw.readersCounter == 1 {
+			rw.globalLock.Lock()
+		}
+	}
+	return gotLock
+}
+
 func (rw *ReadWriteMutex) ReadUnlock() {
 	rw.readersLock.Lock()
 	defer rw.readersLock.Unlock()
