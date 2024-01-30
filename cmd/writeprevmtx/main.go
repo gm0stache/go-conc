@@ -4,13 +4,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/gm0stache/go-conc/internal/sync"
+	mySync "github.com/gm0stache/go-conc/internal/sync"
 )
 
-// main demonstrates 'write-starvation' scenario,
-// where a 'write' lock can never be obtained because the 'read' lock is never freed.
+// This program demonstrates how a 'write-starvation' can be prevented using a write favoring mutex.
 func main() {
-	rwMtx := sync.ReadWriteMutex{}
+	rwMtx := mySync.NewWriterReaderMutex()
 	for i := 0; i < 2; i++ {
 		go func() {
 			for {
