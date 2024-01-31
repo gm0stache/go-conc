@@ -28,6 +28,6 @@ func (s *WeightedSemaphore) Aquire(permits int) {
 func (s *WeightedSemaphore) Release(permits int) {
 	s.cond.L.Lock()
 	s.grantedPermits -= permits
-	s.cond.Broadcast()
+	s.cond.Signal()
 	s.cond.L.Unlock()
 }

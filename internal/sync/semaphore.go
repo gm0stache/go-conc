@@ -28,6 +28,6 @@ func (s *Semaphore) Aquire() {
 func (s *Semaphore) Release() {
 	s.cond.L.Lock()
 	s.grantedPermits--
-	s.cond.Broadcast()
+	s.cond.Signal()
 	s.cond.L.Unlock()
 }
